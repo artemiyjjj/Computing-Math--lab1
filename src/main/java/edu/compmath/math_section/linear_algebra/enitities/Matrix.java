@@ -1,9 +1,9 @@
-package edu.compmath.section.linear_algebra.enitities;
+package edu.compmath.math_section.linear_algebra.enitities;
 
-import edu.compmath.section.MathEntities;
-import edu.compmath.section.linear_algebra.enitities.utils.Column;
-import edu.compmath.section.linear_algebra.enitities.utils.Element;
-import edu.compmath.section.linear_algebra.enitities.utils.Row;
+import edu.compmath.math_section.MathEntities;
+import edu.compmath.math_section.linear_algebra.enitities.utils.Column;
+import edu.compmath.math_section.linear_algebra.enitities.utils.Element;
+import edu.compmath.math_section.linear_algebra.enitities.utils.Row;
 import edu.compmath.utils.exceptions.matrix.InvalidMatrixSizeException;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package edu.compmath.section.linear_algebra.enitities.utils;
+package edu.compmath.math_section.linear_algebra.enitities.utils;
 
 import java.util.ArrayList;
 import java.util.List;
