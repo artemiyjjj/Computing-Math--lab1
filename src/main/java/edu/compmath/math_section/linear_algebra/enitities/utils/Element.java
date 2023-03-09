@@ -1,8 +1,9 @@
-package edu.compmath.methods.linear_algebra.enitities.utils;
+package edu.compmath.section.linear_algebra.enitities.utils;
 
 public class Element<T> {
     private T value;
 
+    public Element() {}
     public Element(T value) {
         this.value = value;
     }
@@ -13,5 +14,10 @@ public class Element<T> {
 
     public void setValue(T value) {
         this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        return this.value.toString();
     }
 }
