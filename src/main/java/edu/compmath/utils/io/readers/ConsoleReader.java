@@ -8,19 +8,19 @@ import java.io.InputStream;
 
 public class ConsoleReader extends Reader {
 
+
     public ConsoleReader(InputStream inputStream) {
-        super(inputStream);
+        super(new BufferedInputStream(inputStream));
     }
 
     @Override
     public String read() throws IOException {
         char temp;
         StringBuilder readString = new StringBuilder();
-        try (BufferedInputStream bufferedInputStream = new BufferedInputStream(this.inputStream)) {
-            while ((temp = (char) bufferedInputStream.read()) != '\n') {
-                readString.append(temp);
-            }
+        while ((temp = (char) inputStream.read()) != '\n') {
+            readString.append(temp);
         }
+
         return readString.toString();
     }
 }

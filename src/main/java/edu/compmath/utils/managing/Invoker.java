@@ -1,8 +1,10 @@
 package edu.compmath.utils.managing;
 
+import edu.compmath.Main;
 import edu.compmath.utils.Observer;
 import edu.compmath.utils.exceptions.InvalidCommandArgsException;
 import edu.compmath.utils.exceptions.InvalidCommandNameException;
+import edu.compmath.utils.io.Writer;
 import edu.compmath.utils.managing.commands.Command;
 import edu.compmath.utils.managing.commands.managers.CommandManager;
 import edu.compmath.utils.parsers.CommandParser;
@@ -23,11 +25,16 @@ public class Invoker implements Observer<String, CommandManager> {
         this.commandManager = commandManager;
     }
 
-    public void findAndExecuteCommand(String name, String[] params) throws InvalidCommandArgsException, InvalidCommandNameException {
-        Command command = commandParser.parseCommand(name, commandManager);
-        String[] validatedParams = commandParser.parseArguments(name, params, commandManager);
-        commandManager.getCommand("help").execute(new String[0]);
-        command.execute(validatedParams);
+    public void findAndExecuteCommand(String name, String[] params){
+        Writer writer = Main.getWriter();
+        try {
+            Command command = commandParser.parseCommand(name, commandManager);
+            String[] validatedParams = commandParser.parseArguments(name, params, commandManager);
+            command.execute(validatedParams);
+        } catch (InvalidCommandNameException | InvalidCommandArgsException e) {
+            writer.write(e.getMessage());
+            commandManager.getCommand("help").execute(new String[0]);
+        }
     }
 
     @Override
@@ -41,7 +48,7 @@ public class Invoker implements Observer<String, CommandManager> {
     public void notifyOfExecution(String[] nameAndArgs) {
         String name = nameAndArgs[0];
         String[] args = Arrays.copyOfRange(nameAndArgs, 1, nameAndArgs.length);
-        System.out.println("Full" + Arrays.toString(nameAndArgs)); //todo убрать саут
+        System.out.println("debug"+ Arrays.toString(nameAndArgs)); //todo delete
         findAndExecuteCommand(name, args);
     }
 }

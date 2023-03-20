@@ -65,7 +65,8 @@ public abstract class CommandManager {
     }
 
     public Command getCommand(String commandName) {
-        return this.registeredCommands.get(commandName).createCommand();
+        CommandFactory commandFactory = this.registeredCommands.get(commandName);
+        return commandFactory != null ? commandFactory.create() : null;
     }
 
 }

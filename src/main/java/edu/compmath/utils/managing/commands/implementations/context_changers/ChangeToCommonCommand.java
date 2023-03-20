@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ChangeToCommonCommand extends Command {
-    private final static String name = "common commands";
+    private final static String name = "common_commands";
     private final static String description = "command returns you to the main menu.";
     private final static Map<String, String> acceptableArgs = new HashMap<>();
     private final CommandManagerContext commandManagerContext;

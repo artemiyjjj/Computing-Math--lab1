@@ -17,4 +17,7 @@ public abstract class Context{
     public void executeStrategy() throws IOException {
         this.strategy.execute();
     }
+    public Strategy getStrategy() {
+        return this.strategy;
+    }
 }

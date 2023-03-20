@@ -17,7 +17,7 @@ public class ChangeToCommonCommandFactory extends CommandFactory {
     }
 
     @Override
-    public Command createCommand() {
+    public Command create() {
         return new ChangeToCommonCommand(commandManagerContext);
     }
 

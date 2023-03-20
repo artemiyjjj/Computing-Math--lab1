@@ -11,7 +11,7 @@ public class ExitCommandFactory extends CommandFactory {
         this.commandExample = new ExitCommand();
     }
     @Override
-    public Command createCommand() {
+    public Command create() {
         return new ExitCommand();
     }
 

@@ -41,7 +41,7 @@ public class GaussSeidelMethodCommand extends Command {
     @Override
     public void execute(String[] args) {
         while (matrix == null) {
-            new InsertMatrixCommand(matrix).execute(new String[]{});
+            new InsertMatrixCommand(this.matrix).execute(new String[]{}); //todo что то ругается
         }
         try {
             Precision<Double> precision = getPrecision();

@@ -13,7 +13,7 @@ public class ExitCommand extends Command {
 
     @Override
     public void execute(String[] args) {
-//todo exit command
+        System.exit(0);
     }
 
     @Override

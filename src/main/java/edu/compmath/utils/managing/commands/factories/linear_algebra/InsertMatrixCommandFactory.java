@@ -17,7 +17,7 @@ public class InsertMatrixCommandFactory extends CommandFactory {
 
 
     @Override
-    public Command createCommand() {
+    public Command create() {
         return new InsertMatrixCommand(matrix);
     }
 

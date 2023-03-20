@@ -2,6 +2,8 @@ package edu.compmath.utils.managing;
 
 import edu.compmath.utils.Observable;
 import edu.compmath.utils.Observer;
+import edu.compmath.utils.Strategy;
+import edu.compmath.utils.exceptions.InvalidCommandArgsException;
 import edu.compmath.utils.managing.commands.CommandContext;
 import edu.compmath.utils.managing.commands.CommandStrategy;
 import edu.compmath.utils.managing.commands.managers.CommandManager;
@@ -14,14 +16,16 @@ import java.util.Map;
  * Class defines which CommandManagerContext is executive and which CommandManager is active
  */
 public class CommandManagerContext extends CommandContext implements Observable<String, CommandManager> {
-    private final Map<Class<?>, CommandStrategy> commandManagerStrategies;
+    private Map<Class<?>, CommandStrategy> commandManagerStrategies;
     private final List<Observer<String, CommandManager>> observers = new ArrayList<>();
     private CommandManager activeCommandManager;
 
-    public CommandManagerContext(Map<Class<?>, CommandStrategy> commandManagerStrategies, CommandStrategy strategy) {
+    public CommandManagerContext(Map<Class<?>, CommandStrategy> commandManagerStrategies, CommandStrategy strategy, List<Observer<String, CommandManager>> observers) {
         super(strategy);
         this.activeCommandManager = strategy.getCommandManager();
         this.commandManagerStrategies = commandManagerStrategies;
+
+        this.observers.addAll(observers);
 
         for (CommandStrategy commandStrategy : commandManagerStrategies.values()) {
             commandStrategy.setObservable(this);
@@ -29,13 +33,34 @@ public class CommandManagerContext extends CommandContext implements Observable<
         notifyObserversOfUpdate(new CommandManager[]{activeCommandManager});
     }
 
+    public CommandManagerContext(List<Observer<String, CommandManager>> observers) {
+        this.observers.addAll(observers);
+
+    }
+
+    @Override
+    public void setStrategy(CommandStrategy strategy) {
+        super.setStrategy(strategy);
+        this.activeCommandManager = strategy.getCommandManager();
+        notifyObserversOfUpdate(new CommandManager[]{activeCommandManager});
+    }
+
+    public void setCommandManagerStrategies(Map<Class<?>, CommandStrategy> commandManagerStrategies) {
+        this.commandManagerStrategies = commandManagerStrategies;
+        for (CommandStrategy commandStrategy : commandManagerStrategies.values()) {
+            commandStrategy.setObservable(this);
+        }
+    }
+
     public void changeStrategy(Class<?> strategyClass) {
-        CommandStrategy strategy = commandManagerStrategies.get(strategyClass);
-        if (strategy != null && !strategy.equals(this.strategy)) {
-            this.strategy = strategy;
-            this.activeCommandManager = strategy.getCommandManager();
-            notifyObserversOfUpdate(new CommandManager[]{this.activeCommandManager});
-        } else throw new IllegalArgumentException("Unexpected call with CommandStrategy what isn't registered");
+        if (this.commandManagerStrategies != null) {
+            CommandStrategy strategy = commandManagerStrategies.get(strategyClass);
+            if (strategy != null && !strategy.equals(this.strategy)) {
+                this.strategy = strategy;
+                this.activeCommandManager = strategy.getCommandManager();
+                notifyObserversOfUpdate(new CommandManager[]{this.activeCommandManager});
+            } else throw new IllegalArgumentException("Unexpected call with CommandStrategy what isn't registered");
+        } else throw new IllegalArgumentException("Forgot to set commandManagerStrategies to CommandManagerContext :)");
     }
 
 

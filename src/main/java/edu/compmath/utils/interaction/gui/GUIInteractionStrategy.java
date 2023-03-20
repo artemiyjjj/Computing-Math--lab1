@@ -1,23 +1,32 @@
 package edu.compmath.utils.interaction.gui;
 
-import edu.compmath.utils.interaction.CommandScanner;
 import edu.compmath.utils.interaction.InteractionStrategy;
+import edu.compmath.utils.interaction.gui.frames.AppFrame;
 import edu.compmath.utils.interaction.gui.frames.MatrixSolverFrame;
-import edu.compmath.utils.io.Reader;
-import edu.compmath.utils.io.Writer;
-import edu.compmath.utils.io.readers.GUIReader;
-import edu.compmath.utils.io.writers.GUIWriter;
+import edu.compmath.utils.interaction.gui.frames.StartFrame;
+import edu.compmath.utils.interaction.gui.frames.factories.AppFrameFactory;
+import edu.compmath.utils.interaction.gui.frames.factories.MatrixSolverFrameFactory;
+import edu.compmath.utils.interaction.gui.frames.factories.StartFrameFactory;
 
-import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GUIInteractionStrategy extends InteractionStrategy {
     // all frames from "src/main/java/edu/compmath/utils/interaction/gui/frames"
-    private MatrixSolverFrame matrixSolverFrame;
+    private AppFrame currentFrame;
+    private final Map<Class<?>, AppFrameFactory> appFrameMap;
 
 
+    /**
+     * have to add new frames to be shown to this constructor and don't forget to call set.
+     */
     public GUIInteractionStrategy() {
-        super(new GUIScanner(new GUIReader(null))); //todo fix gui reader
-//        this.scanner = new GUIScanner();
+        appFrameMap = new HashMap<>();
+        {
+            appFrameMap.put(StartFrame.class, new StartFrameFactory());
+            appFrameMap.put(MatrixSolverFrame.class, new MatrixSolverFrameFactory());
+        }
+        AppFrameFactory.setAcceptableFrames(appFrameMap);
     }
 
 //    @Override

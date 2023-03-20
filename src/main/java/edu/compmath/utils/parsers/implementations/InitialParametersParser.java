@@ -10,13 +10,15 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * If you're extending interaction strategies amount, don't forget to add new strategies to constructor.
+ */
 public class InitialParametersParser {
-    private final Map<String, InteractionStrategy> strategyMap;
+    private final Map<String, InteractionStrategy> strategyMap = new HashMap<>();
 
-    public InitialParametersParser() {
-        strategyMap = new HashMap<>();
-        registerStrategy("g", new GUIInteractionStrategy());
-        registerStrategy(null, new ConsoleInteractionStrategy());
+    public InitialParametersParser(Map<Class<?>, InteractionStrategy> interactionStrategyMap) {
+        registerStrategy("g", interactionStrategyMap.get(GUIInteractionStrategy.class));
+        registerStrategy(null, interactionStrategyMap.get(ConsoleInteractionStrategy.class));
     }
 
     private void registerStrategy(String key, InteractionStrategy strategy) {

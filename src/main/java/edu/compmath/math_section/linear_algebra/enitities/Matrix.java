@@ -1,5 +1,6 @@
 package edu.compmath.math_section.linear_algebra.enitities;
 
+import edu.compmath.Main;
 import edu.compmath.math_section.MathEntities;
 import edu.compmath.math_section.linear_algebra.enitities.utils.Column;
 import edu.compmath.math_section.linear_algebra.enitities.utils.Element;
@@ -18,8 +19,8 @@ public class Matrix extends MathEntities<Double> {
 
 //    @SuppressWarnings("unchecked")
     public Matrix(Double[][] content, int rowsAmount, int columnsAmount) throws InvalidMatrixSizeException {
-        if (rowsAmount == 0 || columnsAmount == 0) { throw new InvalidMatrixSizeException("One of the matrix's size parameters is less or equal zero."); }
-        if (columnsAmount - rowsAmount != 1) { throw new InvalidMatrixSizeException("Can not define matrix's 'b' column."); }
+        if (rowsAmount <= 0 || columnsAmount <= 0) { throw new InvalidMatrixSizeException("One of the matrix's size parameters is less or equal zero."); }
+
         this.rowsAmount = rowsAmount;
         this.columnsAmount = columnsAmount;
         this.rowList = new ArrayList<>(rowsAmount);
@@ -80,6 +81,7 @@ public class Matrix extends MathEntities<Double> {
             }
             builder.append("\n");
         }
+        Main.getWriter().write(builder.toString());
         return builder.toString();
     }
 }

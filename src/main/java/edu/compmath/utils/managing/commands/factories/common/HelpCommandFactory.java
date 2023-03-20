@@ -17,7 +17,7 @@ public class HelpCommandFactory extends CommandFactory {
         this.commandExample = new HelpCommand(null);
     }
     @Override
-    public Command createCommand() {
+    public Command create() {
         return new HelpCommand(this.commandManager);
     }
 

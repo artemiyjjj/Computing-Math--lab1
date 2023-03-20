@@ -2,13 +2,10 @@ package edu.compmath.utils.io;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Stack;
 
 public abstract class Reader {
      protected final InputStream inputStream;
-
-     public Reader() {
-          this.inputStream = null;
-     }
 
      public Reader(InputStream inputStream) {
           this.inputStream = inputStream;

@@ -17,6 +17,10 @@ public class ConsoleWriter implements Writer {
         commonOutputStream.println(string);
     }
 
+    public void write() {
+        commonOutputStream.println();
+    }
+
     @Override
     public void writeErr(String string) {
         errorOutputStream.println(string);

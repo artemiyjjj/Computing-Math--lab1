@@ -20,7 +20,7 @@ public class GaussSeidelMethodCommandFactory extends CommandFactory {
 
 
     @Override
-    public Command createCommand() {
+    public Command create() {
         return new GaussSeidelMethodCommand(calculactionContext, matrix);
     }
 

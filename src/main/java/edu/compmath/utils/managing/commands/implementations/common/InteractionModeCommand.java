@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class InteractionModeCommand extends Command {
-    private final static String name = "changeView";
+    private final static String name = "change_view";
     private final static String description = "command changes the user interface type from console to window mode and vice-versa.";
     private final static Map<String, String> acceptableArgs = new HashMap<>();
     static {
@@ -23,7 +23,7 @@ public class InteractionModeCommand extends Command {
     @Override
     public void execute(String[] args) {
         if (args.length == 0) {
-            if (Main.getInteractionContext().getInteractionStrategy() instanceof ConsoleInteractionStrategy) {
+            if (Main.getInteractionContext().getStrategy() instanceof ConsoleInteractionStrategy) {
                 setGUIStrategy();
             } else {
                 setConsoleStrategy();
@@ -31,14 +31,14 @@ public class InteractionModeCommand extends Command {
         } else {
             switch (args[0]) {
                 case "c": {
-                    if (Main.getInteractionContext().getInteractionStrategy() instanceof ConsoleInteractionStrategy) {
+                    if (Main.getInteractionContext().getStrategy() instanceof ConsoleInteractionStrategy) {
                         Main.getWriter().writeErr("Console interface is already on.");
                     } else {
                         setGUIStrategy();
                     }
                 }
                 case "g": {
-                    if (Main.getInteractionContext().getInteractionStrategy() instanceof GUIInteractionStrategy) {
+                    if (Main.getInteractionContext().getStrategy() instanceof GUIInteractionStrategy) {
                         Main.getWriter().writeErr("GUI interface is already on.");
                     } else {
                         setConsoleStrategy();

@@ -15,7 +15,7 @@ public class ChangeToLinearAlgebraCommandFactory extends CommandFactory {
         this.commandExample = new ChangeToLinearAlgebraCommand(null);
     }
     @Override
-    public Command createCommand() {
+    public Command create() {
         return new ChangeToLinearAlgebraCommand(commandManagerContext);
     }
 

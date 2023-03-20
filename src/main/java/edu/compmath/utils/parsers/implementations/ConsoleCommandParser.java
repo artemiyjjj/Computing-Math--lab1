@@ -33,22 +33,21 @@ public class ConsoleCommandParser implements CommandParser {
         return validatedArgs;
     }
 
-    private String[] validateArgs(String[] args, String[] acceptableArgs) throws InvalidCommandArgsException {
+    public String[] validateArgs(String[] args, String[] acceptableArgs) throws InvalidCommandArgsException {
         if (args.length == 0) {
             return args;
         }
-        if (acceptableArgs.length == 0) {
+        if (acceptableArgs == null || acceptableArgs.length == 0) {
             throw new InvalidCommandArgsException("This command doesn't have any arguments.");
         }
         String[] splitArgs = splitArgs(args);
         Set<String> validatedArgsSet = new HashSet<>();
         for (var arg : splitArgs) {
-            for (var acceptableArg : acceptableArgs) {
-                if (arg.equals(acceptableArg)) {
-                    validatedArgsSet.add(arg);
-                } else {
+            if (Arrays.asList(acceptableArgs).contains(arg)) {
+                validatedArgsSet.add(arg);
+            }
+            else {
                     throw new InvalidCommandArgsException("Some arguments are not valid.");
-                }
             }
         }
         return validatedArgsSet.toArray(String[]::new);
@@ -57,7 +56,7 @@ public class ConsoleCommandParser implements CommandParser {
     private String[] splitArgs(String[] args) {
         return Arrays.stream(args).
 //                 there can be added "--" command arguments regex
-//                flatMap(Pattern.compile("-[A-Za-z]{1} ")::splitAsStream).
+                map((arg) -> arg.replace("-", "")).
 //                flatMap(Pattern.compile("")::splitAsStream).
         toArray(String[]::new);
     }

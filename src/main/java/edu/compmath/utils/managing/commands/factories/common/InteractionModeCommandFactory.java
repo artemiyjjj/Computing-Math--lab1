@@ -14,7 +14,7 @@ public class InteractionModeCommandFactory extends CommandFactory {
     }
 
     @Override
-    public Command createCommand() {
+    public Command create() {
         return new InteractionModeCommand();
     }
 

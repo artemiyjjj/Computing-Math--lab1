@@ -5,6 +5,9 @@ import edu.compmath.utils.io.Reader;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
 
 public class FileReader extends Reader {
 
@@ -13,7 +16,7 @@ public class FileReader extends Reader {
     }
 
     @Override
-    public String read() throws IOException {
+    public String read() throws IOException, SecurityException {
         int temp;
         StringBuilder readString = new StringBuilder();
         try (BufferedInputStream bufferedInputStream = new BufferedInputStream(this.inputStream)) {
@@ -22,6 +25,10 @@ public class FileReader extends Reader {
             }
         }
         return readString.toString();
+    }
+
+    public static List<String> readAllLines(Path path) throws IOException, SecurityException {
+        return Files.readAllLines(path);
     }
 
 }

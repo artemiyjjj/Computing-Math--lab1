@@ -22,6 +22,7 @@ public class HelpCommand extends Command {
 
     public void execute(String[] args) {
         Writer writer = Main.getWriter();
+        writer.write("Here is the list of commands to execute:\n");
         int i = 0;
         Map<String, CommandFactory> registeredCommands = commandManager.getRegisteredCommandFactories();
         for (Map.Entry<String, CommandFactory> entryCommands : registeredCommands.entrySet()) {
@@ -30,7 +31,7 @@ public class HelpCommand extends Command {
             if (entryCommands.getValue().getCommandAcceptableArgs().size() != 0) {
                 Map<String, String> registeredArgs = entryCommands.getValue().getCommandAcceptableArgs();
                 for (Map.Entry<String, String> entryArgs : registeredArgs.entrySet()) {
-                    writer.write("\t\t-" + entryArgs.getKey() + " — " + entryArgs.getKey());
+                    writer.write("\t\t-" + (entryArgs.getKey() == null ? "default" : entryArgs.getKey()) + " — " + entryArgs.getValue());
                 }
             }
         }

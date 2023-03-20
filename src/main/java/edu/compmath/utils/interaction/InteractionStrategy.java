@@ -10,8 +10,10 @@ import edu.compmath.utils.parsers.implementations.StringPrettifyParser;
 import java.io.IOException;
 
 public abstract class InteractionStrategy implements Strategy {
-    protected final CommandScanner commandScanner;
+    protected CommandScanner commandScanner;
 
+    public InteractionStrategy() {
+    }
     public InteractionStrategy(CommandScanner commandScanner) {
         this.commandScanner = commandScanner;
     }
