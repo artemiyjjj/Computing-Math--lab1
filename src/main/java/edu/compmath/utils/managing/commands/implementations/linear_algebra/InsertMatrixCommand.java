@@ -1,13 +1,14 @@
 package edu.compmath.utils.managing.commands.implementations.linear_algebra;
 
 import edu.compmath.Main;
-import edu.compmath.math_section.linear_algebra.enitities.Matrix;
+import edu.compmath.math_section.linear_algebra.enitities.matrix.Matrix;
 import edu.compmath.utils.exceptions.InvalidCommandArgsException;
 import edu.compmath.utils.exceptions.matrix.InvalidMatrixSizeException;
 import edu.compmath.utils.io.Reader;
 import edu.compmath.utils.io.Writer;
 import edu.compmath.utils.io.readers.FileReader;
 import edu.compmath.utils.managing.commands.Command;
+import edu.compmath.utils.managing.commands.managers.MatrixManager;
 import edu.compmath.utils.parsers.implementations.ConsoleCommandParser;
 import edu.compmath.utils.parsers.implementations.PathToFileParser;
 import edu.compmath.utils.parsers.implementations.PlainMatrixParser;
@@ -29,12 +30,13 @@ public class InsertMatrixCommand extends Command {
     static {
         acceptableArgs.put("f", "insert matrix from existing file on the computer.");
         acceptableArgs.put("m", "manual row by row matrix insertion.");
+        acceptableArgs.put("r", "matrix from random numbers.");
     }
 
-    private Matrix matrix;
+    private final MatrixManager matrixManager;
 
-    public InsertMatrixCommand(Matrix matrix) {
-        this.matrix = matrix;
+    public InsertMatrixCommand(MatrixManager matrixManager) {
+        this.matrixManager = matrixManager;
     }
 
     @Override
@@ -106,20 +108,20 @@ public class InsertMatrixCommand extends Command {
                 Optional<Path> pathToFile;
                 do {
                     writer.write("Insert absolute or relative to current directory ("
-                            + Paths.get("") + ") path to file with matrix:");
-                    pathString = reader.read();
+                            + Paths.get("").toString() + ") path to file with matrix:");
+                    pathString = reader.read().trim();
                     pathToFile = PathToFileParser.resolvePath(pathString);
                 }
                 while (pathToFile.isEmpty());
 
                 List<String> fileLines = FileReader.readAllLines(pathToFile.get());
                 List<String[]> rowsList = fileLines.stream().map(StringPrettifyParser::handleLine).collect(Collectors.toList());
-                matrix = matrixParser.parseEntity(rowsList);
-                matrix.display();
+                matrixManager.setMatrix(matrixParser.parseEntity(rowsList));
+                matrixManager.getMatrix().display();
             }
 
             case "m" -> {
-                writer.write("Insert matrix with rows separated by new line(Enter) and elemens separated by \" \"(space).");
+                writer.write("Insert matrix with rows separated by new line(Enter) and elements separated by \" \"(space).");
                 writer.write("To end up inserting, tap Enter once again.");
                 List<String[]> rowList = new ArrayList<>();
                 String[] newLine;
@@ -131,15 +133,40 @@ public class InsertMatrixCommand extends Command {
                         break;
                     }
                 }
-                matrix = matrixParser.parseEntity(rowList);
-                matrix.display();
+                matrixManager.setMatrix(matrixParser.parseEntity(rowList));
+                matrixManager.getMatrix().display();
             }
 
+            case "r" -> {
+                writer.write("Insert amount of roots:");
+                int amountOfRoots = 0;
+                String readLine;
+                do {
+                    readLine = reader.read();
+                    try {
+                        amountOfRoots = Integer.parseInt(readLine);
+                        if (amountOfRoots < 0) {
+                            continue;
+                        }
+                    } catch (NumberFormatException e) {
+                        writer.write("Insert one number of int type.");
+                        continue;
+                    }
+                } while (amountOfRoots == 0);
+                Double[][] randomValues = new Double[amountOfRoots][amountOfRoots + 1];
+                for (int i = 0; i < amountOfRoots; i++) {
+                    for (int j = 0; j < amountOfRoots + 1; j++) {
+                        boolean isSigned = Math.random() > 0.5;
+                        double value = Math.random() * 1000;
+                        value = isSigned ? value : -value;
+                        randomValues[i][j] = value;
+                    }
+                }
+                matrixManager.setMatrix(new Matrix(randomValues, amountOfRoots, amountOfRoots + 1));
+            }
             default -> throw new InvalidCommandArgsException("Inserted argument is not acceptable.");
         }
     }
-
-
 
     @Override
     public String getName() {

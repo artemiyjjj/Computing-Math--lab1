@@ -1,24 +1,24 @@
 package edu.compmath.utils.managing.commands.factories.linear_algebra;
 
-import edu.compmath.math_section.linear_algebra.enitities.Matrix;
 import edu.compmath.utils.managing.commands.Command;
 import edu.compmath.utils.managing.commands.CommandFactory;
 import edu.compmath.utils.managing.commands.implementations.linear_algebra.DisplayMatrixCommand;
+import edu.compmath.utils.managing.commands.managers.MatrixManager;
 
 import java.util.Map;
 
 public class DisplayMatrixCommandFactory extends CommandFactory {
 
-    private Matrix matrix;
+    private final MatrixManager matrixManager;
 
-    public DisplayMatrixCommandFactory(Matrix matrix) {
-        this.matrix = matrix;
+    public DisplayMatrixCommandFactory(MatrixManager matrixManager) {
+        this.matrixManager = matrixManager;
         this.commandExample = new DisplayMatrixCommand(null);
     }
 
     @Override
     public Command create() {
-        return new DisplayMatrixCommand(matrix);
+        return new DisplayMatrixCommand(matrixManager);
     }
 
     @Override

@@ -2,12 +2,13 @@ package edu.compmath.utils.managing.commands.implementations.linear_algebra;
 
 import edu.compmath.Main;
 import edu.compmath.math_section.CalculactionContext;
-import edu.compmath.math_section.linear_algebra.enitities.Matrix;
-import edu.compmath.math_section.linear_algebra.methods.gauss_seidel.GaussSeidelBasicStrategy;
-import edu.compmath.math_section.linear_algebra.methods.gauss_seidel.GaussSeidelInformativeStrategy;
+import edu.compmath.math_section.linear_algebra.methods.gauss_seidel.strategies.GaussSeidelBasicStrategy;
+import edu.compmath.math_section.linear_algebra.methods.gauss_seidel.strategies.GaussSeidelInformativeStrategy;
 import edu.compmath.math_section.linear_algebra.methods.gauss_seidel.utils.Precision;
 import edu.compmath.utils.exceptions.InvalidCommandArgsException;
 import edu.compmath.utils.managing.commands.Command;
+import edu.compmath.utils.managing.commands.managers.MatrixManager;
+import edu.compmath.utils.parsers.implementations.ConsoleCommandParser;
 import edu.compmath.utils.parsers.implementations.PrecisionParser;
 import edu.compmath.utils.parsers.implementations.StringPrettifyParser;
 
@@ -24,48 +25,49 @@ public class GaussSeidelMethodCommand extends Command {
         acceptableArgs.put("i", "shows each iteration's result.");
         acceptableArgs.put(null, "not informative way of executing.");
     }
-    private final static boolean hasArgs = true;
     private CalculactionContext context;
-    private Matrix matrix;
+    private final MatrixManager matrixManager;
 
-    public GaussSeidelMethodCommand(CalculactionContext context, Matrix matrix) {
+    public GaussSeidelMethodCommand(CalculactionContext context, MatrixManager matrixManager) {
         super();
         this.context = context;
-        this.matrix = matrix;
+        this.matrixManager = matrixManager;
     }
 
-    public GaussSeidelMethodCommand(Matrix matrix) {
+    public GaussSeidelMethodCommand(MatrixManager matrixManager) {
         super();
+        this.matrixManager = matrixManager;
     }
 
     @Override
     public void execute(String[] args) {
-        while (matrix == null) {
-            new InsertMatrixCommand(this.matrix).execute(new String[]{}); //todo что то ругается
+        ConsoleCommandParser consoleCommandParser = new ConsoleCommandParser();
+        while (matrixManager.getMatrix() == null) {
+            new InsertMatrixCommand(this.matrixManager).execute(new String[]{});
         }
         try {
             Precision<Double> precision = getPrecision();
+            args = consoleCommandParser.validateArgs(args, acceptableArgs.keySet().toArray(String[]::new));
             if (Arrays.asList(args).contains("i")) {
-                context.setStrategy(new GaussSeidelInformativeStrategy(matrix, precision.getValue()));
+                context.setStrategy(new GaussSeidelInformativeStrategy(matrixManager.getMatrix(), precision.getValue()));
             }
             else {
-                context.setStrategy(new GaussSeidelBasicStrategy(matrix, precision.getValue()));
+                context.setStrategy(new GaussSeidelBasicStrategy(matrixManager.getMatrix(), precision.getValue()));
             }
             context.executeStrategy();
         } catch (IOException e) {
-            Main.getWriter().write("Failed to read precision");
+            Main.getWriter().write("Failed to read precision.");
         }
     }
 
     private Precision<Double> getPrecision() throws IOException {
-        Main.getWriter().write("Insert calculation precision");
         String precisionString;
         Precision<Double> precision;
         PrecisionParser precisionParser = new PrecisionParser();
-        StringPrettifyParser stringPrettifyParser = new StringPrettifyParser();
         do {
+            Main.getWriter().write("Insert calculation precision");
             precisionString = Main.getReader().read();
-            String[] handledString = stringPrettifyParser.handleLine(precisionString);
+            String[] handledString = StringPrettifyParser.handleLine(precisionString);
             try {
                 precision = precisionParser.argumentParse(handledString);
                 break;

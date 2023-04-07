@@ -48,7 +48,6 @@ public class Invoker implements Observer<String, CommandManager> {
     public void notifyOfExecution(String[] nameAndArgs) {
         String name = nameAndArgs[0];
         String[] args = Arrays.copyOfRange(nameAndArgs, 1, nameAndArgs.length);
-        System.out.println("debug"+ Arrays.toString(nameAndArgs)); //todo delete
         findAndExecuteCommand(name, args);
     }
 }
