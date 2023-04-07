@@ -67,7 +67,6 @@ public class InsertMatrixCommand extends Command {
             }
         } catch (IOException e) {
             writer.write("Reading operation is broken. Restart the app.");
-            return;
         }
     }
 
@@ -116,8 +115,8 @@ public class InsertMatrixCommand extends Command {
 
                 List<String> fileLines = FileReader.readAllLines(pathToFile.get());
                 List<String[]> rowsList = fileLines.stream().map(StringPrettifyParser::handleLine).collect(Collectors.toList());
-                matrixManager.setMatrix(matrixParser.parseEntity(rowsList));
-                matrixManager.getMatrix().display();
+                matrixManager.setEntity(matrixParser.parseEntity(rowsList));
+                matrixManager.getEntity().display();
             }
 
             case "m" -> {
@@ -133,8 +132,8 @@ public class InsertMatrixCommand extends Command {
                         break;
                     }
                 }
-                matrixManager.setMatrix(matrixParser.parseEntity(rowList));
-                matrixManager.getMatrix().display();
+                matrixManager.setEntity(matrixParser.parseEntity(rowList));
+                matrixManager.getEntity().display();
             }
 
             case "r" -> {
@@ -162,7 +161,7 @@ public class InsertMatrixCommand extends Command {
                         randomValues[i][j] = value;
                     }
                 }
-                matrixManager.setMatrix(new Matrix(randomValues, amountOfRoots, amountOfRoots + 1));
+                matrixManager.setEntity(new Matrix(randomValues, amountOfRoots, amountOfRoots + 1));
             }
             default -> throw new InvalidCommandArgsException("Inserted argument is not acceptable.");
         }

@@ -25,7 +25,7 @@ public class GaussSeidelMethodCommand extends Command {
         acceptableArgs.put("i", "shows each iteration's result.");
         acceptableArgs.put(null, "not informative way of executing.");
     }
-    private CalculactionContext context;
+    private final CalculactionContext context;
     private final MatrixManager matrixManager;
 
     public GaussSeidelMethodCommand(CalculactionContext context, MatrixManager matrixManager) {
@@ -34,25 +34,20 @@ public class GaussSeidelMethodCommand extends Command {
         this.matrixManager = matrixManager;
     }
 
-    public GaussSeidelMethodCommand(MatrixManager matrixManager) {
-        super();
-        this.matrixManager = matrixManager;
-    }
-
     @Override
     public void execute(String[] args) {
         ConsoleCommandParser consoleCommandParser = new ConsoleCommandParser();
-        while (matrixManager.getMatrix() == null) {
+        while (matrixManager.getEntity() == null) {
             new InsertMatrixCommand(this.matrixManager).execute(new String[]{});
         }
         try {
             Precision<Double> precision = getPrecision();
             args = consoleCommandParser.validateArgs(args, acceptableArgs.keySet().toArray(String[]::new));
             if (Arrays.asList(args).contains("i")) {
-                context.setStrategy(new GaussSeidelInformativeStrategy(matrixManager.getMatrix(), precision.getValue()));
+                context.setStrategy(new GaussSeidelInformativeStrategy(matrixManager.getEntity(), precision.getValue()));
             }
             else {
-                context.setStrategy(new GaussSeidelBasicStrategy(matrixManager.getMatrix(), precision.getValue()));
+                context.setStrategy(new GaussSeidelBasicStrategy(matrixManager.getEntity(), precision.getValue()));
             }
             context.executeStrategy();
         } catch (IOException e) {

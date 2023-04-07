@@ -9,11 +9,9 @@ import java.util.List;
 
 public abstract class MatrixSolvingStrategy<T extends Number> implements CalculationStrategy {
     private final Calculator<List<T>> matrixCalculator;
-    private final Matrix matrix;
 
-    public MatrixSolvingStrategy(Calculator<List<T>> matrixCalculator, Matrix matrix) {
+    public MatrixSolvingStrategy(Calculator<List<T>> matrixCalculator) {
         this.matrixCalculator = matrixCalculator;
-        this.matrix = matrix;
     }
     @Override
     public void execute() {

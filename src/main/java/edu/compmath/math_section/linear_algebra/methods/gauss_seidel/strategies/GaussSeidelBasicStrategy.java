@@ -7,7 +7,7 @@ import edu.compmath.math_section.linear_algebra.methods.gauss_seidel.GaussSeidel
 public class GaussSeidelBasicStrategy extends MatrixSolvingStrategy<Double> {
 
     public GaussSeidelBasicStrategy(Matrix matrix, Double precision) {
-        super(new GaussSeidel(matrix, precision), matrix);
+        super(new GaussSeidel(matrix, precision));
     }
 
 }

@@ -7,6 +7,6 @@ import edu.compmath.math_section.linear_algebra.methods.gauss_seidel.GaussSeidel
 public class GaussSeidelInformativeStrategy extends MatrixSolvingStrategy<Double> {
 
     public GaussSeidelInformativeStrategy(Matrix matrix, Double precision) {
-        super(new GaussSeidelInformative(matrix, precision), matrix);
+        super(new GaussSeidelInformative(matrix, precision));
     }
 }

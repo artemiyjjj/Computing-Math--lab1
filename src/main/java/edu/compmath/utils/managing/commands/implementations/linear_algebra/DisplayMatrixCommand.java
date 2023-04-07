@@ -20,9 +20,9 @@ public class DisplayMatrixCommand extends Command {
 
     @Override
     public void execute(String[] args) {
-        if (matrixManager.getMatrix() != null) {
+        if (matrixManager.getEntity() != null) {
             Main.getWriter().write("Matrix representation:\n");
-            Main.getWriter().write(matrixManager.getMatrix().display());
+            Main.getWriter().write(matrixManager.getEntity().display());
         }
         else {
             Main.getWriter().write("Matrix is not initialized.");
