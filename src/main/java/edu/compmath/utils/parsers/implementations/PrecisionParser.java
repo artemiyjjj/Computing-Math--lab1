@@ -13,7 +13,7 @@ public class PrecisionParser implements ArgumentParser<Precision<Double>> {
         double value;
         try {
             value = Double.parseDouble(args[0]);
-        } catch (ClassCastException e) {
+        } catch (ClassCastException | NumberFormatException e) {
             throw new InvalidCommandArgsException("Precision must be float value.");
         }
         return new Precision<>(value);
