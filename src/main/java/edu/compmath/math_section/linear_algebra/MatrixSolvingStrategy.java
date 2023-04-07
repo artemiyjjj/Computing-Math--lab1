@@ -3,22 +3,22 @@ package edu.compmath.math_section.linear_algebra;
 import edu.compmath.Main;
 import edu.compmath.math_section.CalculationStrategy;
 import edu.compmath.math_section.Calculator;
-import edu.compmath.math_section.linear_algebra.enitities.Matrix;
+import edu.compmath.math_section.linear_algebra.enitities.matrix.Matrix;
 
 import java.util.List;
 
-public abstract class MatrixSolvingStrategy<S extends Matrix, T extends Number> implements CalculationStrategy {
-    private final Calculator<List<T>, S> matrixCalculator;
-    private final S matrix;
+public abstract class MatrixSolvingStrategy<T extends Number> implements CalculationStrategy {
+    private final Calculator<List<T>> matrixCalculator;
+    private final Matrix matrix;
 
-    public MatrixSolvingStrategy(Calculator<List<T>, S> matrixCalculator, S matrix) {
+    public MatrixSolvingStrategy(Calculator<List<T>> matrixCalculator, Matrix matrix) {
         this.matrixCalculator = matrixCalculator;
         this.matrix = matrix;
     }
     @Override
     public void execute() {
-        List<T> result = matrixCalculator.calc(matrix);
-        Main.getWriter().write(formatResult(result));
+        List<T> result = matrixCalculator.calc();
+        Main.getWriter().write( result != null ? formatResult(result) : "This system can not be solved.");
     }
 
     protected String formatResult(List<T> result) {

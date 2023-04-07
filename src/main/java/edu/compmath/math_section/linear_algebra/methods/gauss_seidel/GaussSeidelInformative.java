@@ -2,40 +2,43 @@ package edu.compmath.math_section.linear_algebra.methods.gauss_seidel;
 
 import edu.compmath.Main;
 import edu.compmath.math_section.Calculator;
-import edu.compmath.math_section.linear_algebra.enitities.Matrix;
+import edu.compmath.math_section.linear_algebra.enitities.matrix.Matrix;
+import edu.compmath.math_section.linear_algebra.enitities.matrix.utils.MatrixActions;
 import edu.compmath.math_section.linear_algebra.methods.gauss_seidel.utils.Precision;
-import edu.compmath.utils.io.Writer;
 
 import java.util.List;
 
-public class GaussSeidelInformative<S extends Matrix> implements Calculator<List<Double>, S> {
-    protected final GaussSeidel<S> matrixSolver;
+public class GaussSeidelInformative implements Calculator<List<Double>> {
+    protected final GaussSeidel calcMethod;
 
-    public GaussSeidelInformative(S matrix, double precision) {
-        this.matrixSolver = new GaussSeidel<>(matrix, precision);
+    public GaussSeidelInformative(Matrix matrix, double precision) {
+        this.calcMethod = new GaussSeidel(matrix, precision);
     }
 
     @Override
-    public List<Double> calc(S s) {
-        List<Double> oldIteration = matrixSolver.getOldIteration();
-        List<Double> newIteration = matrixSolver.getNewIteration();
-        List<Precision<Double>> precisions = matrixSolver.getLastIterationPrecision();
-        int iterationCounter = matrixSolver.getIterationCounter();
-        List<Double> result;
-        do {
-            oldIteration.clear();
-            oldIteration.addAll(newIteration);
-            result = this.doIteration();
-            Main.getWriter().write(buildStatus(iterationCounter, oldIteration, newIteration, precisions));
+    public List<Double> calc() {
+        if (!calcMethod.checkConvergenceCondition()) {
+            MatrixActions.optimizeToDiagonalDomination(this.calcMethod.matrix);
+            if (!calcMethod.checkConvergenceCondition()) {
+                return null;
+            }
         }
-        while (matrixSolver.getIsPrecisionSatisfied());
-        Main.getWriter().write("Calculations completed");
-        return result;
+        do {
+            calcMethod.getOldIteration().clear();
+            calcMethod.getOldIteration().addAll(calcMethod.getNewIteration());
+            calcMethod.getNewIteration().clear();
+            this.doIteration();
+            Main.getWriter().write(buildStatus(calcMethod.getIterationCounter(), calcMethod.getOldIteration(),
+                    calcMethod.getNewIteration(), calcMethod.lastIterationPrecision));
+        }
+        while (calcMethod.getIterationCounter() < calcMethod.MAX_ITERATION_COUNTER && !calcMethod.getIsPrecisionSatisfied());
+        Main.getWriter().write(calcMethod.getIterationCounter() > calcMethod.MAX_ITERATION_COUNTER ? "Possibly endless cycle." : "Calculations completed");
+        return calcMethod.getNewIteration();
     }
 
     @Override
     public List<Double> doIteration() {
-        return matrixSolver.doIteration();
+        return calcMethod.doIteration();
     }
 
     protected String buildStatus(int iterationIndex, List<Double> oldIteration, List<Double> newIteration, List<Precision<Double>> precisions) {

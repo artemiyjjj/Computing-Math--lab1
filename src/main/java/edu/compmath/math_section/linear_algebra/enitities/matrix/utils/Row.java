@@ -1,8 +1,8 @@
-package edu.compmath.math_section.linear_algebra.enitities.utils;
+package edu.compmath.math_section.linear_algebra.enitities.matrix.utils;
 
 import java.util.List;
 
-public class Row<S extends Element<T>, T extends Number> extends Column<S, T> {
+public class Row<T extends Number> extends Column<T> {
 
     public Row(List<Element<T>> content) {
         super(content);

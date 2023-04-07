@@ -2,17 +2,14 @@ package edu.compmath.math_section.linear_algebra;
 
 import edu.compmath.math_section.CalculactionContext;
 import edu.compmath.math_section.CalculationStrategy;
-import edu.compmath.math_section.linear_algebra.enitities.Matrix;
+import edu.compmath.math_section.MathEntities;
 
-public class LinearAlgebraSolver<S extends Matrix, T extends Number> extends CalculactionContext {
+public class LinearAlgebraSolver<T extends Number> extends CalculactionContext {
 
-    public LinearAlgebraSolver(MatrixSolvingStrategy<S, T> strategy) {
+    public LinearAlgebraSolver(CalculationStrategy strategy) {
         super(strategy);
     }
 
     public LinearAlgebraSolver() {}
-
-
-
 
 }
