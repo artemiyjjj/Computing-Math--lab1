@@ -1,4 +1,4 @@
-package edu.compmath.math_section.linear_algebra.enitities.matrix.utils;
+package edu.compmath.math_section.utils;
 
 public class Element<T> {
     private T value;

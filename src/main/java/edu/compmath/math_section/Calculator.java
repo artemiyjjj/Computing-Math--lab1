@@ -7,4 +7,5 @@ package edu.compmath.math_section;
 public interface Calculator<T> {
     T calc();
     T doIteration();
+    int getIterationCounter();
 }

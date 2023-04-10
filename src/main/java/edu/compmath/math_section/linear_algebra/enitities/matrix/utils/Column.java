@@ -1,5 +1,7 @@
 package edu.compmath.math_section.linear_algebra.enitities.matrix.utils;
 
+import edu.compmath.math_section.utils.Element;
+
 import java.util.ArrayList;
 import java.util.List;
 

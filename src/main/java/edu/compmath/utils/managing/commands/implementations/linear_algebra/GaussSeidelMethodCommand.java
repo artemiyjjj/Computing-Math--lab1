@@ -2,12 +2,13 @@ package edu.compmath.utils.managing.commands.implementations.linear_algebra;
 
 import edu.compmath.Main;
 import edu.compmath.math_section.CalculactionContext;
+import edu.compmath.math_section.linear_algebra.enitities.matrix.Matrix;
 import edu.compmath.math_section.linear_algebra.methods.gauss_seidel.strategies.GaussSeidelBasicStrategy;
 import edu.compmath.math_section.linear_algebra.methods.gauss_seidel.strategies.GaussSeidelInformativeStrategy;
-import edu.compmath.math_section.linear_algebra.methods.gauss_seidel.utils.Precision;
+import edu.compmath.math_section.utils.Precision;
 import edu.compmath.utils.exceptions.InvalidCommandArgsException;
 import edu.compmath.utils.managing.commands.Command;
-import edu.compmath.utils.managing.commands.managers.MatrixManager;
+import edu.compmath.utils.managing.commands.managers.MathEntityManager;
 import edu.compmath.utils.parsers.implementations.ConsoleCommandParser;
 import edu.compmath.utils.parsers.implementations.PrecisionParser;
 import edu.compmath.utils.parsers.implementations.StringPrettifyParser;
@@ -23,12 +24,12 @@ public class GaussSeidelMethodCommand extends Command {
     private final static Map<String, String> acceptableArgs = new HashMap<>();
     static {
         acceptableArgs.put("i", "shows each iteration's result.");
-        acceptableArgs.put(null, "not informative way of executing.");
+        acceptableArgs.put(null, "not informative way of executing (default).");
     }
     private final CalculactionContext context;
-    private final MatrixManager matrixManager;
+    private final MathEntityManager<Matrix> matrixManager;
 
-    public GaussSeidelMethodCommand(CalculactionContext context, MatrixManager matrixManager) {
+    public GaussSeidelMethodCommand(CalculactionContext context, MathEntityManager<Matrix> matrixManager) {
         super();
         this.context = context;
         this.matrixManager = matrixManager;
@@ -44,10 +45,10 @@ public class GaussSeidelMethodCommand extends Command {
             Precision<Double> precision = getPrecision();
             args = consoleCommandParser.validateArgs(args, acceptableArgs.keySet().toArray(String[]::new));
             if (Arrays.asList(args).contains("i")) {
-                context.setStrategy(new GaussSeidelInformativeStrategy(matrixManager.getEntity(), precision.getValue()));
+                context.setStrategy(new GaussSeidelInformativeStrategy(matrixManager.getEntity(), precision));
             }
             else {
-                context.setStrategy(new GaussSeidelBasicStrategy(matrixManager.getEntity(), precision.getValue()));
+                context.setStrategy(new GaussSeidelBasicStrategy(matrixManager.getEntity(), precision));
             }
             context.executeStrategy();
         } catch (IOException e) {

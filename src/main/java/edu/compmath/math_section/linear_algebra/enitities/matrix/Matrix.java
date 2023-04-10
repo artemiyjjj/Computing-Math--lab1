@@ -1,8 +1,8 @@
 package edu.compmath.math_section.linear_algebra.enitities.matrix;
 
-import edu.compmath.math_section.MathEntities;
+import edu.compmath.math_section.utils.MathEntities;
 import edu.compmath.math_section.linear_algebra.enitities.matrix.utils.Column;
-import edu.compmath.math_section.linear_algebra.enitities.matrix.utils.Element;
+import edu.compmath.math_section.utils.Element;
 import edu.compmath.math_section.linear_algebra.enitities.matrix.utils.Row;
 import edu.compmath.utils.exceptions.matrix.InvalidMatrixSizeException;
 

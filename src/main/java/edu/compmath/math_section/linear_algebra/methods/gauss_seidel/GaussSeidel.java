@@ -2,11 +2,11 @@ package edu.compmath.math_section.linear_algebra.methods.gauss_seidel;
 
 import edu.compmath.math_section.Calculator;
 import edu.compmath.math_section.linear_algebra.enitities.matrix.Matrix;
-import edu.compmath.math_section.linear_algebra.enitities.matrix.utils.Element;
+import edu.compmath.math_section.utils.Element;
 import edu.compmath.math_section.linear_algebra.enitities.matrix.utils.MatrixActions;
 import edu.compmath.math_section.linear_algebra.enitities.matrix.utils.Row;
-import edu.compmath.math_section.linear_algebra.methods.gauss_seidel.utils.Precision;
-import edu.compmath.math_section.linear_algebra.methods.gauss_seidel.utils.PrecisionCalculator;
+import edu.compmath.math_section.utils.Precision;
+import edu.compmath.math_section.utils.PrecisionCalculator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,14 +20,15 @@ public class GaussSeidel implements Calculator<List<Double>> {
     protected final Precision<Double> precision;
     protected volatile boolean isPrecisionSatisfied = false;
     protected List<Precision<Double>> lastIterationPrecision;
+
     protected final Matrix matrix;
     protected final int amountOfRoots;
     protected final PrecisionCalculator<Double> precisionCalculator = new PrecisionCalculator<>();
 
 
-    public GaussSeidel(Matrix matrix, double precision) {
+    public GaussSeidel(Matrix matrix, Precision<Double> precision) {
         this.matrix = matrix;
-        this.precision = new Precision<>(precision);
+        this.precision = precision;
         this.amountOfRoots = matrix.getColumnsAmount() - 1;
         this.oldIteration = new ArrayList<>(amountOfRoots);
         this.newIteration = new ArrayList<>(amountOfRoots);

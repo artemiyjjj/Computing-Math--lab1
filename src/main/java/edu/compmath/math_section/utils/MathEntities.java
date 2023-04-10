@@ -1,4 +1,4 @@
-package edu.compmath.math_section;
+package edu.compmath.math_section.utils;
 
 public abstract class MathEntities<T extends Number> {
 

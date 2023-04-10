@@ -4,14 +4,14 @@ import edu.compmath.Main;
 import edu.compmath.math_section.Calculator;
 import edu.compmath.math_section.linear_algebra.enitities.matrix.Matrix;
 import edu.compmath.math_section.linear_algebra.enitities.matrix.utils.MatrixActions;
-import edu.compmath.math_section.linear_algebra.methods.gauss_seidel.utils.Precision;
+import edu.compmath.math_section.utils.Precision;
 
 import java.util.List;
 
 public class GaussSeidelInformative implements Calculator<List<Double>> {
     protected final GaussSeidel calcMethod;
 
-    public GaussSeidelInformative(Matrix matrix, double precision) {
+    public GaussSeidelInformative(Matrix matrix, Precision<Double> precision) {
         this.calcMethod = new GaussSeidel(matrix, precision);
     }
 
@@ -39,6 +39,11 @@ public class GaussSeidelInformative implements Calculator<List<Double>> {
     @Override
     public List<Double> doIteration() {
         return calcMethod.doIteration();
+    }
+
+    @Override
+    public int getIterationCounter() {
+        return calcMethod.getIterationCounter();
     }
 
     protected String buildStatus(int iterationIndex, List<Double> oldIteration, List<Double> newIteration, List<Precision<Double>> precisions) {

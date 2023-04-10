@@ -1,6 +1,6 @@
 package edu.compmath.utils.parsers.implementations;
 
-import edu.compmath.math_section.linear_algebra.methods.gauss_seidel.utils.Precision;
+import edu.compmath.math_section.utils.Precision;
 import edu.compmath.utils.exceptions.InvalidCommandArgsException;
 import edu.compmath.utils.parsers.ArgumentParser;
 

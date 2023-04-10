@@ -1,4 +1,4 @@
-package edu.compmath.math_section.linear_algebra.methods.gauss_seidel.utils;
+package edu.compmath.math_section.utils;
 
 import java.util.Objects;
 

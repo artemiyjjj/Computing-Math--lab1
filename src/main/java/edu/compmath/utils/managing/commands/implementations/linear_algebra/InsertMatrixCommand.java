@@ -8,7 +8,7 @@ import edu.compmath.utils.io.Reader;
 import edu.compmath.utils.io.Writer;
 import edu.compmath.utils.io.readers.FileReader;
 import edu.compmath.utils.managing.commands.Command;
-import edu.compmath.utils.managing.commands.managers.MatrixManager;
+import edu.compmath.utils.managing.commands.managers.MathEntityManager;
 import edu.compmath.utils.parsers.implementations.ConsoleCommandParser;
 import edu.compmath.utils.parsers.implementations.PathToFileParser;
 import edu.compmath.utils.parsers.implementations.PlainMatrixParser;
@@ -33,9 +33,9 @@ public class InsertMatrixCommand extends Command {
         acceptableArgs.put("r", "matrix from random numbers.");
     }
 
-    private final MatrixManager matrixManager;
+    private final MathEntityManager<Matrix> matrixManager;
 
-    public InsertMatrixCommand(MatrixManager matrixManager) {
+    public InsertMatrixCommand(MathEntityManager<Matrix> matrixManager) {
         this.matrixManager = matrixManager;
     }
 

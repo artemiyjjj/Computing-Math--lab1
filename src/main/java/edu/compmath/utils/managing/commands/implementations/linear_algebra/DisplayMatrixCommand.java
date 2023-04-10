@@ -1,8 +1,9 @@
 package edu.compmath.utils.managing.commands.implementations.linear_algebra;
 
 import edu.compmath.Main;
+import edu.compmath.math_section.linear_algebra.enitities.matrix.Matrix;
 import edu.compmath.utils.managing.commands.Command;
-import edu.compmath.utils.managing.commands.managers.MatrixManager;
+import edu.compmath.utils.managing.commands.managers.MathEntityManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,9 +13,9 @@ public class DisplayMatrixCommand extends Command {
     private final static String description = "command displays matrix.";
     private final static Map<String, String> acceptableArgs = new HashMap<>();
 
-    private final MatrixManager matrixManager;
+    private final MathEntityManager<Matrix> matrixManager;
 
-    public DisplayMatrixCommand(MatrixManager matrixManager) {
+    public DisplayMatrixCommand(MathEntityManager<Matrix> matrixManager) {
         this.matrixManager = matrixManager;
     }
 

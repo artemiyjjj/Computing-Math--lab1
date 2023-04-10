@@ -3,7 +3,6 @@ package edu.compmath.math_section.linear_algebra;
 import edu.compmath.Main;
 import edu.compmath.math_section.CalculationStrategy;
 import edu.compmath.math_section.Calculator;
-import edu.compmath.math_section.linear_algebra.enitities.matrix.Matrix;
 
 import java.util.List;
 
@@ -13,6 +12,7 @@ public abstract class MatrixSolvingStrategy<T extends Number> implements Calcula
     public MatrixSolvingStrategy(Calculator<List<T>> matrixCalculator) {
         this.matrixCalculator = matrixCalculator;
     }
+
     @Override
     public void execute() {
         List<T> result = matrixCalculator.calc();
@@ -26,6 +26,7 @@ public abstract class MatrixSolvingStrategy<T extends Number> implements Calcula
             stringBuilder.append("\t").append("x[").append(i+1).append("]: ")
                     .append(result.get(i).toString()).append("\n");
         }
+        stringBuilder.append("Iterations made: ").append(matrixCalculator.getIterationCounter()).append("\n");
         return stringBuilder.toString();
     }
 }
